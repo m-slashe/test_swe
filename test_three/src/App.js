@@ -69,14 +69,10 @@ function Home() {
   }
 
   async function onDogSelected(url) {
-    let favoritesDogs = localStorage.getItem(DOGS_FAVORITES_KEY);
-    if (favoritesDogs != null) {
-      favoritesDogs = JSON.parse(favoritesDogs);
-    } else {
-      favoritesDogs = [];
-    }
-    favoritesDogs.push(url);
-    localStorage.setItem(DOGS_FAVORITES_KEY, JSON.stringify(favoritesDogs));
+    const dogsUrlString = localStorage.getItem(DOGS_FAVORITES_KEY);
+    const dogsUrl = dogsUrlString != null ? JSON.parse(dogsUrlString) : []
+    dogsUrl.push(url);
+    localStorage.setItem(DOGS_FAVORITES_KEY, JSON.stringify(dogsUrl));
     toast("Selected dog was put on favorites!");
     await fetchDogs();
   }
@@ -146,12 +142,8 @@ function DogCard({ url, onSelect }) {
 }
 
 function Favorites() {
-  let dogsUrl = localStorage.getItem(DOGS_FAVORITES_KEY);
-  if (dogsUrl != null) {
-    dogsUrl = JSON.parse(dogsUrl);
-  } else {
-    dogsUrl = [];
-  }
+  const dogsUrlString = localStorage.getItem(DOGS_FAVORITES_KEY);
+  const dogsUrl = dogsUrlString != null ? JSON.parse(dogsUrlString) : []
   return (
     <div>
       <DogContainerTitle>Your favorite dogs</DogContainerTitle>
